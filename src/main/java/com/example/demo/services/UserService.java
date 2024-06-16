@@ -18,9 +18,9 @@ public class UserService {
 	
 	public void registerUser(User user) {
 		
-//		if (userRepository.findByUsername(user.getUsername()) != null) {
-//            throw new RuntimeException("User already exists");
-//        }
+		if (userRepository.findByUsername(user.getUsername()) != null) {
+            throw new RuntimeException("User already exists");
+        }
 		
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);

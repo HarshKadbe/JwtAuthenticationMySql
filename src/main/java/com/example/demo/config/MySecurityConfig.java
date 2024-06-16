@@ -36,19 +36,17 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// TODO Auto-generated method stub
-		http
-				.csrf()
-				.disable()
-				.cors()
-				.disable()
-				.authorizeRequests()
-				.antMatchers("/token", "/register").permitAll()
-				.anyRequest().authenticated()
-				.and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.exceptionHandling().authenticationEntryPoint(entryPoint);
+        // TODO Auto-generated method stub
+        http
+                .csrf(csrf -> csrf
+                        .disable())
+                .cors(cors -> cors
+                        .disable())
+                .authorizeRequests(requests -> requests
+                        .antMatchers("/token", "/register").permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(handling -> handling.authenticationEntryPoint(entryPoint));
 		
 	http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
